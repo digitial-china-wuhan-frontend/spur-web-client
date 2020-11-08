@@ -10,18 +10,14 @@ const Stories = ({ stories }) => {
     <div>
       <div className="uk-child-width-1-2" data-uk-grid>
         <div>
-          {leftStories.map((article, i) => {
-            return (
-              <Card article={article} key={`article__${article.node.id}`} />
-            )
+          {leftStories.map((story, i) => {
+            return <Card story={story} key={`story__${story.node.id}`} />
           })}
         </div>
         <div>
           <div className="uk-child-width-1-2@m uk-grid-match" data-uk-grid>
-            {rightStories.map((article, i) => {
-              return (
-                <Card article={article} key={`article__${article.node.id}`} />
-              )
+            {rightStories.map((story, i) => {
+              return <Card story={story} key={`story__${story.node.id}`} />
             })}
           </div>
         </div>

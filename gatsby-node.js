@@ -1,7 +1,32 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/node-apis/
- */
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const result = await graphql(
+    `
+      {
+        stories: allStrapiStory {
+          edges {
+            node {
+              strapiId
+            }
+          }
+        }
+      }
+    `
+  )
 
-// You can delete this file if you're not using it
+  if (result.errors) {
+    throw result.errors
+  }
+
+  // Create blog stories pages.
+  const stories = result.data.stories.edges
+  stories.forEach((story, index) => {
+    createPage({
+      path: `/story/${story.node.strapiId}`,
+      component: require.resolve("./src/templates/story.js"),
+      context: {
+        id: story.node.strapiId,
+      },
+    })
+  })
+}
